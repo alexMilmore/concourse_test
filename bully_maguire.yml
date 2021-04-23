@@ -1,0 +1,21 @@
+---
+jobs:
+    - name: dig_on_this
+      public: true
+      plan:
+          - task: finger_snap
+            config:
+                platform: linux
+                
+                # inputs:
+                #     - name: bully_maguire
+                
+                image_resource:
+                    type: docker-image
+                    source: {repository: busybox}
+                
+                run:
+                    # path: ./bully_maguire/bully_maguire.sh
+                    path: echo
+                    args: ["gonna put some dirt in your eye"]
+---
