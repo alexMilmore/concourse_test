@@ -1,21 +1,42 @@
 ---
+resources:
+    - name: bully_maguire
+      type: git
+      source:
+          uri: https://github.com/alexMilmore/concourse_test.git
+          branch: master
 jobs:
     - name: dig_on_this
       public: true
       plan:
+          - get: bully_maguire
           - task: finger_snap
             config:
                 platform: linux
                 
-                # inputs:
-                #     - name: bully_maguire
+                inputs:
+                    - name: bully_maguire
+                outputs:
+                    - name: maguires
                 
                 image_resource:
                     type: docker-image
                     source: {repository: busybox}
                 
                 run:
-                    # path: ./bully_maguire/bully_maguire.sh
-                    path: echo
-                    args: ["gonna put some dirt in your eye"]
+                    path: ./bully_maguire/maguire_functions/bully_maguire_gen.sh
+          - task: finger_snap
+            config:
+                platform: linux
+                
+                inputs:
+                    - name: bully_maguire
+                    - name: maguires
+                
+                image_resource:
+                    type: docker-image
+                    source: {repository: busybox}
+                
+                run:
+                    path: ./bully_maguire/maguire_functions/bully_maguire_print.sh
 ---
